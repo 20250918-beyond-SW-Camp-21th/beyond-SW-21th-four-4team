@@ -22,27 +22,6 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.fail(errorCode));
     }
 
-    // 회원가입 dto 형식 검증 예외처리
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException ex) {
-        String message = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .findFirst()
-                .map(err -> err.getDefaultMessage())
-                .orElse(ErrorCode.INVALID_INPUT.getMessage());
-
-        ErrorResponse error = ErrorResponse.builder()
-                .status(ErrorCode.INVALID_INPUT.getStatus().value())
-                .code(ErrorCode.INVALID_INPUT.getCode())
-                .message(message)
-                .build();
-
-        return ResponseEntity
-                .badRequest()
-                .body(ApiResponse.fail(error));
-    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(Exception ex) {
         log.error("예상치 못한 에러 발생: ", ex);
