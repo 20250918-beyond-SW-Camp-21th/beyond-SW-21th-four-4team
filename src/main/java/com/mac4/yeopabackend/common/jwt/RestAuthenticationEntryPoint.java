@@ -1,9 +1,11 @@
 package com.mac4.yeopabackend.common.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mac4.yeopabackend.common.exception.BusinessException;
 import com.mac4.yeopabackend.common.exception.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -11,7 +13,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public void commence(HttpServletRequest request,
@@ -38,13 +43,13 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         String timestamp = java.time.LocalDateTime.now().toString();
         int status = HttpServletResponse.SC_UNAUTHORIZED;
 
-        String jsonResponse = "{"
-                + "\"timestamp\":\"" + timestamp + "\","
-                + "\"status\":" + status + ","
-                + "\"code\":\"" + errorCode.getCode() + "\","
-                + "\"message\":\"" + errorCode.getMessage() + "\""
-                + "}";
+        var body = java.util.Map.of(
+                "timestamp", timestamp,
+                "status", status,
+                "code", errorCode.getCode(),
+                "message", errorCode.getMessage()
+        );
 
-        response.getWriter().write(jsonResponse);
+        response.getWriter().write(objectMapper.writeValueAsString(body));
     }
 }

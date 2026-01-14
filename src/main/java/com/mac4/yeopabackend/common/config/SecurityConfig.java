@@ -74,6 +74,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOriginPattern("*"); // 허용할 도메인
+        // TODO(세현) : 배포 전 허용된 도메인 명시적으로 지정
+//        config.addAllowedOrigin("https://yeopa.com"); // 프로덕션 도메인
         config.addAllowedHeader("*"); // 모든 헤더 허용
         config.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
 

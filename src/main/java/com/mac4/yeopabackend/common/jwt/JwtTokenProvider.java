@@ -109,16 +109,21 @@ public class JwtTokenProvider {
     }
 
     public long getRemainingMillis(String token) {
-        Claims claims = Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
 
-        Date exp = claims.getExpiration();
-        long remaining = exp.getTime() - System.currentTimeMillis();
+            Date exp = claims.getExpiration();
+            long remaining = exp.getTime() - System.currentTimeMillis();
 
-        return Math.max(remaining, 0);
+            return Math.max(remaining, 0);
+        } catch (ExpiredJwtException e) {
+            return 0;
+        }
+
     }
 
 }

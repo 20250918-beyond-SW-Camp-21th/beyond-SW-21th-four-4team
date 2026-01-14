@@ -34,24 +34,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // 1) 토큰 검증 (문제 있으면 예외 -> EntryPoint에서 401 처리)
+            String email;
+            UserDetails userDetails;
             try {
+                // 1) 토큰 검증 (문제 있으면 예외 -> EntryPoint에서 401 처리)
                 jwtTokenProvider.validateToken(token);
                 if (tokenBlacklistStore.isBlacklisted(token)) {
                     throw new BadCredentialsException("JWT is blacklisted"); // 인증 실패
                 }
+                // 2) 토큰에서 email 추출
+                email = jwtTokenProvider.getUsernameFromJWT(token);
+                // 3) email로 UserDetails 로드 (CustomUserDetailsService가 처리)
+                userDetails = userDetailsService.loadUserByUsername(email);
 
             } catch (BusinessException e) {
                 // AuthenticationException으로 감싸서 EntryPoint로 보내기
                 throw new BadCredentialsException("JWT authentication failed", e);
             }
-
-
-            // 2) 토큰에서 loginId 추출
-            String email = jwtTokenProvider.getUsernameFromJWT(token);
-
-            // 3) loginId로 UserDetails 로드 (CustomUserDetailsService가 처리)
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
             // 4) 인증 객체 생성 후 SecurityContext에 등록
             UsernamePasswordAuthenticationToken authentication =
