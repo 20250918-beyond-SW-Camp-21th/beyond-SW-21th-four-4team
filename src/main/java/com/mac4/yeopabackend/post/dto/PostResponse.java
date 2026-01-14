@@ -1,0 +1,15 @@
+package com.mac4.yeopabackend.post;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
+public class PostResponse {
+    Long userId;
+    String title;
+    String location;
+    String text;
+    String image;
+    String singleText;
+}
