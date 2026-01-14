@@ -48,10 +48,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
             // 2) 토큰에서 loginId 추출
-            String loginId = jwtTokenProvider.getUsernameFromJWT(token);
+            String email = jwtTokenProvider.getUsernameFromJWT(token);
 
             // 3) loginId로 UserDetails 로드 (CustomUserDetailsService가 처리)
-            UserDetails userDetails = userDetailsService.loadUserByUsername(loginId);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
             // 4) 인증 객체 생성 후 SecurityContext에 등록
             UsernamePasswordAuthenticationToken authentication =

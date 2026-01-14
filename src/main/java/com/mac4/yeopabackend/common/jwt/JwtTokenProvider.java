@@ -34,13 +34,13 @@ public class JwtTokenProvider {
     }
 
     // access token 생성 메소드 (claim에 userId 추가)
-    public String createToken(String loginId, Long userId) {
+    public String createToken(Long userId, String email) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
 
         return Jwts.builder()
-                .subject(loginId)
-                .claim("userId", userId)
+                .subject(email)
+                .claim("userId",userId)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(secretKey)
@@ -48,12 +48,12 @@ public class JwtTokenProvider {
     }
 
     // refresh token 생성 메소드 (claim에 userId 추가)
-    public String createRefreshToken(String username, Long userId) {
+    public String createRefreshToken(Long userId, String email) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtRefreshExpiration);
 
         return Jwts.builder()
-                .subject(username)
+                .subject(email)
                 .claim("userId", userId)
                 .issuedAt(now)
                 .expiration(expiryDate)
