@@ -1,6 +1,6 @@
 package com.mac4.yeopabackend.common.security;
 
-import com.mac4.yeopabackend.user.entity.User;
+import com.mac4.yeopabackend.user.domain.User;
 import com.mac4.yeopabackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

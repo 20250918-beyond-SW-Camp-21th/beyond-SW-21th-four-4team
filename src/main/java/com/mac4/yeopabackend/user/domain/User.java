@@ -1,4 +1,4 @@
-package com.mac4.yeopabackend.user.entity;
+package com.mac4.yeopabackend.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
