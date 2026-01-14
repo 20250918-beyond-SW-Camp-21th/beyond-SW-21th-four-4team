@@ -47,8 +47,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // 3) email로 UserDetails 로드 (CustomUserDetailsService가 처리)
                 userDetails = userDetailsService.loadUserByUsername(email);
 
-            } catch (BusinessException e) {
+            } catch (BusinessException | io.jsonwebtoken.JwtException e) {
                 // AuthenticationException으로 감싸서 EntryPoint로 보내기
+                throw new BadCredentialsException("JWT authentication failed", e);
+            } catch (Exception e) {
+                // 예상치 못한 예외도 인증 실패로 처리
                 throw new BadCredentialsException("JWT authentication failed", e);
             }
 
