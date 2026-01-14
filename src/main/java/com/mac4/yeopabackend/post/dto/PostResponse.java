@@ -1,4 +1,4 @@
-package com.mac4.yeopabackend.post;
+package com.mac4.yeopabackend.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

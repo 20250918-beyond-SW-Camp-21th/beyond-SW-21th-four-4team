@@ -1,9 +1,11 @@
-package com.mac4.yeopabackend.post;
+package com.mac4.yeopabackend.post.service;
 
+import com.mac4.yeopabackend.post.domain.Post;
+import com.mac4.yeopabackend.post.repository.PostRepository;
+import com.mac4.yeopabackend.post.dto.PostRequest;
+import com.mac4.yeopabackend.post.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +24,9 @@ public class PostService {
         ,post.getText(),post.getImage(),post.getSingleText());
     }
 
-    public PostResponse getAllPost(){
-        
+    public Post getAllPost(){
+        return (Post) postRepository.findAll();
+
     }
 
 }

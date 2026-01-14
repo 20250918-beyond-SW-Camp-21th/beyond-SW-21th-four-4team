@@ -1,10 +1,11 @@
-package com.mac4.yeopabackend.post;
+package com.mac4.yeopabackend.post.controller;
 
+import com.mac4.yeopabackend.post.domain.Post;
+import com.mac4.yeopabackend.post.dto.PostRequest;
+import com.mac4.yeopabackend.post.dto.PostResponse;
+import com.mac4.yeopabackend.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.ResultSet;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,10 +1,10 @@
-package com.mac4.yeopabackend.post;
+package com.mac4.yeopabackend.post.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.mac4.yeopabackend.post.PostRequest;
+import com.mac4.yeopabackend.post.dto.PostRequest;
 
 @Entity
 @Getter
