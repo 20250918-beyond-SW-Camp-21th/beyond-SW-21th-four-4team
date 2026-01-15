@@ -59,27 +59,6 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.fail(error));
     }
 
-    // 동시성 제어
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ApiResponse<Void>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
-        log.error("DataIntegrityViolationException 발생: ", ex);
-
-        // DB/드라이버마다 메시지 다르니 MostSpecificCause 우선 사용
-        String msg = ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage();
-        msg = (msg == null) ? "" : msg.toLowerCase();
-
-        if (msg.contains("duplicate") && msg.contains("email")) {
-            ErrorCode errorCode = ErrorCode.USER_EMAIL_DUPLICATED;
-            return ResponseEntity.status(errorCode.getStatus()).body(ApiResponse.fail(errorCode));
-        }
-
-        // 그 외 무결성 위반은 일단 공통 400 또는 500으로 처리 (팀 컨벤션 선택)
-        ErrorCode errorCode = ErrorCode.INVALID_INPUT;
-        return ResponseEntity
-                .status(errorCode.getStatus())
-                .body(ApiResponse.fail(errorCode));
-    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(Exception ex) {
         log.error("예상치 못한 에러 발생: ", ex);
