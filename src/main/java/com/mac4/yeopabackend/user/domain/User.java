@@ -1,4 +1,4 @@
-package com.mac4.yeopabackend.user.entity;
+package com.mac4.yeopabackend.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,7 +6,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints = @UniqueConstraint(name = "UK_USER_EMAIL", columnNames = {"email"}))
 public class User {
 
     @Id
