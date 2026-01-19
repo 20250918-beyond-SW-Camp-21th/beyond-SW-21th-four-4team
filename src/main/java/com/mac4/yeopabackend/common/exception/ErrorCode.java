@@ -21,8 +21,8 @@ public enum ErrorCode {
     AUTH_LOGIN_FAILED(HttpStatus.UNAUTHORIZED, "A005", "아이디 또는 비밀번호가 올바르지 않습니다."),
 
     // user
-    USER_EMAIL_DUPLICATED(HttpStatus.CONFLICT, "U001", "이미 사용 중인 이메일입니다.")
-
+    USER_EMAIL_DUPLICATED(HttpStatus.CONFLICT, "U001", "이미 사용 중인 이메일입니다."),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "U002", "사용자가 존재하지 않습니다.")
     ;
 
     private final HttpStatus status;

@@ -1,12 +1,16 @@
 package com.mac4.yeopabackend.user.controller;
 
+import com.mac4.yeopabackend.common.exception.BusinessException;
+import com.mac4.yeopabackend.common.exception.ErrorCode;
 import com.mac4.yeopabackend.common.response.ApiResponse;
+import com.mac4.yeopabackend.common.security.CustomUser;
+import com.mac4.yeopabackend.user.dto.request.ModifyRequestDto;
+import com.mac4.yeopabackend.user.dto.response.MyPageResponseDto;
 import com.mac4.yeopabackend.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -18,6 +22,24 @@ public class UserController {
     @PostMapping("/logout")
     public ApiResponse<Void> logout(@RequestHeader("Authorization") String authorization){
         userService.logout(authorization);
+        return ApiResponse.success();
+    }
+
+    @GetMapping("/mypage")
+    public ApiResponse<MyPageResponseDto> mypage(@AuthenticationPrincipal CustomUser user){
+
+        MyPageResponseDto myPage = userService.mypage(user.getId());
+
+        return ApiResponse.success(myPage);
+    }
+
+    @PatchMapping("/description")
+    public ApiResponse<Void> modifyDescription(@AuthenticationPrincipal CustomUser user,
+                                               @RequestBody @Valid ModifyRequestDto request) {
+        if (user == null) throw new BusinessException(ErrorCode.AUTH_UNAUTHORIZED);
+
+        userService.modifyDescription(user.getId(),request.description());
+
         return ApiResponse.success();
     }
 }
