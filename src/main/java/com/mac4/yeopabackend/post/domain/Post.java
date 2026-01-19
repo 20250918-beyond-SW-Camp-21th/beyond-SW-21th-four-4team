@@ -52,9 +52,8 @@ public class Post {
     @Column
     private String image;
 
-    @NotNull
     @Column
-    private LocalDate creatAt = LocalDate.now();
+    private LocalDate createdAt;
 
     @Lob
     @NotNull
@@ -62,7 +61,7 @@ public class Post {
     private String singleText;
 
     public static Post from(Long userId, PostRequest req, String image, String objectKey, String originalName) {
-        return new Post(null, userId, req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image, req.getCreatAt() ,req.getSingleText());
+        return new Post(null, userId, req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image,LocalDate.now(),req.getSingleText());
     }
 
 }

@@ -6,7 +6,7 @@ public record MypageResponse (
         String image,
         String title,
         String singleText,
-        LocalDate creatAt,
+        LocalDate createdAt,
         String location
         ){
 }

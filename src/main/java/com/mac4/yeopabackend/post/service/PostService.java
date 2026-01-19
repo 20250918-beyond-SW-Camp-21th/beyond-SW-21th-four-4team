@@ -37,7 +37,7 @@ public class PostService {
                 post.getImage(),
                 post.getTitle(),
                 post.getSingleText(),
-                post.getCreatAt(),
+                post.getCreatedAt(),
                 post.getLocation()
                 ))
                 .toList();
@@ -49,7 +49,7 @@ public class PostService {
                         post.image(),
                         post.title(),
                         post.singleText(),
-                        post.creatAt(),
+                        post.createdAt(),
                         post.location()
                 ))
                 .toList();

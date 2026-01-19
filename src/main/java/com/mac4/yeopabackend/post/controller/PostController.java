@@ -32,6 +32,7 @@ public class PostController {
     public ApiResponse<?> creatPost (
             @AuthenticationPrincipal CustomUser user,
             @ModelAttribute PostRequest request) throws IOException {
+        if(user == null) throw new BusinessException(ErrorCode.AUTH_UNAUTHORIZED);
         MultipartFile file = request.getFile();
         if(file.getOriginalFilename().matches("[A-Za-z0-9._\\-가-힣 ]+"))
             throw new BusinessException(ErrorCode.POST_TEXT_NONINCODING);
