@@ -6,6 +6,7 @@ import com.mac4.yeopabackend.common.jwt.TokenBlacklistStore;
 import com.mac4.yeopabackend.user.domain.User;
 import com.mac4.yeopabackend.user.dto.response.MyPageResponseDto;
 import com.mac4.yeopabackend.user.repository.UserRepository;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,5 +42,16 @@ public class UserService {
                 user.getUsername(),
                 user.getDescription()
         );
+    }
+
+    @Transactional
+    public void modifyDescription(Long id, String description) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        user.modifyDescription(description);
+
+        userRepository.save(user);
     }
 }

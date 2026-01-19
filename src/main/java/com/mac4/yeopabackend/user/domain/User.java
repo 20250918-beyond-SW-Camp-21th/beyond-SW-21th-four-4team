@@ -36,4 +36,8 @@ public class User {
         this.username = username;
         this.description = description;
     }
+
+    public void modifyDescription(String description) {
+        this.description = description;
+    }
 }
