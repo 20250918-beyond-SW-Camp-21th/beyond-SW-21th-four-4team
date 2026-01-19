@@ -1,5 +1,7 @@
 package com.mac4.yeopabackend.post.controller;
 
+import com.mac4.yeopabackend.common.exception.BusinessException;
+import com.mac4.yeopabackend.common.exception.ErrorCode;
 import com.mac4.yeopabackend.common.response.ApiResponse;
 import com.mac4.yeopabackend.common.security.CustomUser;
 import com.mac4.yeopabackend.post.domain.Post;
@@ -31,8 +33,8 @@ public class PostController {
             @AuthenticationPrincipal CustomUser user,
             @ModelAttribute PostRequest request) throws IOException {
         MultipartFile file = request.getFile();
-        if(!file.getOriginalFilename().matches("[A-Za-z0-9._\\-가-힣 ]+"))
-            throw new IllegalArgumentException("400 ERROR 허용되지 않는 파일명입니다.");
+        if(file.getOriginalFilename().matches("[A-Za-z0-9._\\-가-힣 ]+"))
+            throw new BusinessException(ErrorCode.POST_TEXT_NONINCODING);
         FileInfo fileName = fileService.uploadFile(file);
         postService.create(user.getId(), request, fileName.objectKey(),fileName.originalName());
 

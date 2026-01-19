@@ -53,7 +53,7 @@ public class UserController {
     public ApiResponse<List<MypageResponse>> getPost(@AuthenticationPrincipal CustomUser user){
 
         if(user == null) throw new BusinessException(ErrorCode.AUTH_UNAUTHORIZED);
-        if(postService.getMyPost(user.getId()).isEmpty()) throw new IllegalArgumentException("204error");
+        if(postService.getMyPost(user.getId()).isEmpty()) throw new BusinessException(ErrorCode.POST_USER_NOTFOUND);
         return ApiResponse.success(postService.getMyPost(user.getId()));
     }
 }
