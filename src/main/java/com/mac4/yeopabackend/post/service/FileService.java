@@ -28,16 +28,21 @@ public class FileService {
         }
         String fileName = file.getOriginalFilename();
         if(fileName == null || fileName.isBlank()){
-            throw new IllegalArgumentException("file name is null or black");
+            throw new IllegalArgumentException("file name is null or blank");
         }
         String key = UUID.randomUUID().toString();
         String rewriteFileName = key + file.getOriginalFilename();
         byte[] bytes = file.getBytes();
 
+        String contentType = file.getContentType();
+        if(contentType == null || contentType.isBlank()){
+            contentType = "application/octet-stream";
+        }
+
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(bucket)
                 .key(rewriteFileName)
-                .contentType(file.getContentType())
+                .contentType(contentType)
                 .build();
 
         s3Client.putObject(request, RequestBody.fromBytes(bytes));
