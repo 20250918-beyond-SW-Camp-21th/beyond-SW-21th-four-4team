@@ -6,15 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class PostRequest {
-    private Long userId;
     private String location;
     private String title;
     private String text;
+    private LocalDate creatAt;
     private String singleText;
     private MultipartFile file;
 }

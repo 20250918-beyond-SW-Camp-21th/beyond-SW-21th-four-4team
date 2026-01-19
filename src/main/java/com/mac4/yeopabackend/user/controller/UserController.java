@@ -4,6 +4,9 @@ import com.mac4.yeopabackend.common.exception.BusinessException;
 import com.mac4.yeopabackend.common.exception.ErrorCode;
 import com.mac4.yeopabackend.common.response.ApiResponse;
 import com.mac4.yeopabackend.common.security.CustomUser;
+import com.mac4.yeopabackend.post.dto.MypageResponse;
+import com.mac4.yeopabackend.post.dto.PostResponse;
+import com.mac4.yeopabackend.post.service.PostService;
 import com.mac4.yeopabackend.user.dto.request.ModifyRequestDto;
 import com.mac4.yeopabackend.user.dto.response.MyPageResponseDto;
 import com.mac4.yeopabackend.user.service.UserService;
@@ -12,12 +15,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
 
     @PostMapping("/logout")
     public ApiResponse<Void> logout(@RequestHeader("Authorization") String authorization){
@@ -41,5 +47,13 @@ public class UserController {
         userService.modifyDescription(user.getId(),request.description());
 
         return ApiResponse.success();
+    }
+
+    @GetMapping
+    public ApiResponse<List<MypageResponse>> getPost(@AuthenticationPrincipal CustomUser user){
+
+        if(user == null) throw new BusinessException(ErrorCode.AUTH_UNAUTHORIZED);
+        if(postService.getMyPost(user.getId()).isEmpty()) throw new IllegalArgumentException("204error");
+        return ApiResponse.success(postService.getMyPost(user.getId()));
     }
 }

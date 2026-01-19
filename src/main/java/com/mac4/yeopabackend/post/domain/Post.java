@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import com.mac4.yeopabackend.post.dto.PostRequest;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -50,13 +52,17 @@ public class Post {
     @Column
     private String image;
 
+    @NotNull
+    @Column
+    private LocalDate creatAt = LocalDate.now();
+
     @Lob
     @NotNull
     @Column
     private String singleText;
 
-    public static Post from(PostRequest req, String image, String objectKey, String originalName) {
-        return new Post(null, req.getUserId(), req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image, req.getSingleText());
+    public static Post from(Long userId, PostRequest req, String image, String objectKey, String originalName) {
+        return new Post(null, userId, req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image, req.getCreatAt() ,req.getSingleText());
     }
 
 }
