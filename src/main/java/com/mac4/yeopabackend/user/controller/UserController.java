@@ -28,8 +28,6 @@ public class UserController {
     @GetMapping("/mypage")
     public ApiResponse<MyPageResponseDto> mypage(@AuthenticationPrincipal CustomUser user){
 
-        if (user == null) throw new BusinessException(ErrorCode.AUTH_UNAUTHORIZED);
-
         MyPageResponseDto myPage = userService.mypage(user.getId());
 
         return ApiResponse.success(myPage);
