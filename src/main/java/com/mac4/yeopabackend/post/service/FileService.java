@@ -56,18 +56,6 @@ public class FileService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ 다운로드
-    public byte[] downloadFile(String fileName) throws IOException {
-        GetObjectRequest request = GetObjectRequest.builder()
-                .bucket(bucket)
-                .key(fileName)
-                .build();
-
-        try (ResponseInputStream<GetObjectResponse> response = s3Client.getObject(request)) {
-            return response.readAllBytes();
-        }
-    }
-
     // ✅ 삭제
     public void deleteFile(String fileName) {
         DeleteObjectRequest request = DeleteObjectRequest.builder()

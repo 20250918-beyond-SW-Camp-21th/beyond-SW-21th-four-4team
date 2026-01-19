@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.mac4.yeopabackend.post.dto.PostRequest;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Getter
@@ -34,13 +35,16 @@ public class Post {
     private String objectKey;
 
     @Column
+    private String originalName;
+
+    @Column
     private String image;
 
     @Column
     private String singleText;
 
-    public static Post form(PostRequest req, String objectKey, String originalName) {
-        return new Post(null, req.getUserId(), req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, req.getSingleText());
+    public static Post form(PostRequest req, String image, String objectKey, String originalName) {
+        return new Post(null, req.getUserId(), req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image, req.getSingleText());
     }
 
 }
