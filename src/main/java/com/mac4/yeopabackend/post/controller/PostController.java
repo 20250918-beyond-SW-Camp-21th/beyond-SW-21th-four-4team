@@ -24,6 +24,7 @@ public class PostController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> creatPost (
+
             @ModelAttribute PostRequest request) throws IOException {
         MultipartFile file = request.getFile();
         FileInfo fileName = fileService.uploadFile(file);

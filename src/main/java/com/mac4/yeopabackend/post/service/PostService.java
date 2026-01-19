@@ -20,7 +20,7 @@ public class PostService {
 
     public void create(PostRequest postRequest, String objectKey, String originalName){
         String image = endpoint + "/yeopa/" + objectKey + originalName;
-        postRepository.save(Post.form(postRequest,image,objectKey,originalName));
+        postRepository.save(Post.from(postRequest,image,objectKey,originalName));
     }
 
     public PostResponse getPost(Long id) {

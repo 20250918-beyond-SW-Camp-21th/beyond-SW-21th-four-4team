@@ -27,6 +27,9 @@ public class FileService {
             throw new IllegalArgumentException("file is null or empty");
         }
         String fileName = file.getOriginalFilename();
+        if(fileName == null || fileName.isBlank()){
+            throw new IllegalArgumentException("file name is null or black");
+        }
         String key = UUID.randomUUID().toString();
         String rewriteFileName = key + file.getOriginalFilename();
         byte[] bytes = file.getBytes();
