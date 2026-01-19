@@ -22,8 +22,13 @@ public enum ErrorCode {
 
     // user
     USER_EMAIL_DUPLICATED(HttpStatus.CONFLICT, "U001", "이미 사용 중인 이메일입니다."),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "U002", "사용자가 존재하지 않습니다.")
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "U002", "사용자가 존재하지 않습니다."),
+
+    POST_USER_NOTFOUND(HttpStatus.NO_CONTENT, "P001", "응답할 내용을 찾지못했습니다."),
+    POST_TEXT_NONINCODING(HttpStatus.BAD_REQUEST, "P002", "잘못된 파일명을 가지고있습니다.")
     ;
+
+
 
     private final HttpStatus status;
     private final String code;

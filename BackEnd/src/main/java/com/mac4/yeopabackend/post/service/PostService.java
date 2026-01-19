@@ -1,6 +1,7 @@
 package com.mac4.yeopabackend.post.service;
 
 import com.mac4.yeopabackend.post.domain.Post;
+import com.mac4.yeopabackend.post.dto.MypageResponse;
 import com.mac4.yeopabackend.post.repository.PostRepository;
 import com.mac4.yeopabackend.post.dto.PostRequest;
 import com.mac4.yeopabackend.post.dto.PostResponse;
@@ -18,9 +19,9 @@ public class PostService {
     @Value("${s3.endpoint}")
     private String endpoint;
 
-    public void create(PostRequest postRequest, String objectKey, String originalName){
+    public void create(Long userId, PostRequest postRequest, String objectKey, String originalName){
         String image = endpoint + "/yeopa/" + objectKey + originalName;
-        postRepository.save(Post.from(postRequest,image,objectKey,originalName));
+        postRepository.save(Post.from(userId,postRequest,image,objectKey,originalName));
     }
 
     public PostResponse getPost(Long id) {
@@ -31,11 +32,27 @@ public class PostService {
         ,post.getText(),post.getImage(),post.getSingleText());
     }
 
-    public List<PostResponse> getAllPost(){
-        return  postRepository.findAll().stream().map(post -> new PostResponse(post.getUserId(),post.getTitle(),post.getLocation()
-                        ,post.getText(),post.getImage(),post.getSingleText()))
+    public List<MypageResponse> getAllPost(){
+        return  postRepository.findAll().stream().map(post -> new MypageResponse(
+                post.getImage(),
+                post.getTitle(),
+                post.getSingleText(),
+                post.getCreatedAt(),
+                post.getLocation()
+                ))
                 .toList();
 
+    }
+
+    public List<MypageResponse> getMyPost(Long id){
+        return  postRepository.findAllByUserId(id).stream().map(post -> new MypageResponse(
+                        post.image(),
+                        post.title(),
+                        post.singleText(),
+                        post.createdAt(),
+                        post.location()
+                ))
+                .toList();
     }
 
 }

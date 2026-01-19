@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 public class PostRequest {
-    private Long userId;
     private String location;
     private String title;
     private String text;
