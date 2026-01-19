@@ -31,13 +31,16 @@ public class Post {
     private String text;
 
     @Column
+    private String objectKey;
+
+    @Column
     private String image;
 
     @Column
     private String singleText;
 
-    public static Post from(PostRequest req) {
-        return new Post(null, req.getUserId(), req.getTitle(), req.getLocation(), req.getText(), req.getImage(), req.getSingleText());
+    public static Post form(PostRequest req, String objectKey, String originalName) {
+        return new Post(null, req.getUserId(), req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, req.getSingleText());
     }
 
 }

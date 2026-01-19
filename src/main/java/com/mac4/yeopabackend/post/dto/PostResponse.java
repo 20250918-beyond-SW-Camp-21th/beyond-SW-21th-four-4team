@@ -10,6 +10,7 @@ public class PostResponse {
     String title;
     String location;
     String text;
+    String objectKey;
     String image;
     String singleText;
 }
