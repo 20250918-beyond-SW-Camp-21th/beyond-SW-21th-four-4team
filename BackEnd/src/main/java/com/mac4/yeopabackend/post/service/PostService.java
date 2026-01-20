@@ -33,12 +33,12 @@ public class PostService {
     }
 
     public List<MypageResponse> getAllPost(){
-        return  postRepository.findAll().stream().map(post -> new MypageResponse(
-                post.getImage(),
-                post.getTitle(),
-                post.getSingleText(),
-                post.getCreatedAt(),
-                post.getLocation()
+        return  postRepository.findAllByOrderByCreatedAtDesc().stream().map(post -> new MypageResponse(
+                post.image(),
+                post.title(),
+                post.singleText(),
+                post.createdAt(),
+                post.location()
                 ))
                 .toList();
 

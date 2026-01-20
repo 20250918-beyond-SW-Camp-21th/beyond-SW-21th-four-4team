@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.mac4.yeopabackend.post.dto.PostRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 
@@ -53,6 +54,7 @@ public class Post {
     private String image;
 
     @Column
+    @CreatedDate
     private LocalDate createdAt;
 
     @Lob
