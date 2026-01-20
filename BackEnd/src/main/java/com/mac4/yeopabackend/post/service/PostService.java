@@ -28,17 +28,18 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Post Not Found"));
 
-        return new PostResponse(post.getUserId(),post.getTitle(),post.getLocation()
+        return new PostResponse(post.getId(),post.getUserId(),post.getTitle(),post.getLocation()
         ,post.getText(),post.getImage(),post.getSingleText());
     }
 
     public List<MypageResponse> getAllPost(){
-        return  postRepository.findAll().stream().map(post -> new MypageResponse(
-                post.getImage(),
-                post.getTitle(),
-                post.getSingleText(),
-                post.getCreatedAt(),
-                post.getLocation()
+        return  postRepository.findAllByOrderByCreatedAtDesc().stream().map(post -> new MypageResponse(
+                post.id(),
+                post.image(),
+                post.title(),
+                post.singleText(),
+                post.createdAt(),
+                post.location()
                 ))
                 .toList();
 
@@ -46,6 +47,7 @@ public class PostService {
 
     public List<MypageResponse> getMyPost(Long id){
         return  postRepository.findAllByUserId(id).stream().map(post -> new MypageResponse(
+                        post.id(),
                         post.image(),
                         post.title(),
                         post.singleText(),
