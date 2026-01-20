@@ -42,11 +42,6 @@ public class PostController {
         return ApiResponse.success();
     }
 
-    @GetMapping("/list")
-    public ApiResponse<List<String>> list() {
-        return ApiResponse.success(fileService.listFiles());
-    }
-
     @GetMapping("/{id}")
     public ApiResponse<PostResponse> getPost(@PathVariable Long id) {
         return ApiResponse.success(postService.getPost(id));
