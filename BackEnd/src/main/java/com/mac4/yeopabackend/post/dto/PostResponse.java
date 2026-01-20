@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 public record PostResponse (
+        Long id,
         Long userId,
         String username,
         String title,

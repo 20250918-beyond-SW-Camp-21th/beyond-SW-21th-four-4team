@@ -34,6 +34,7 @@ public class PostService {
 
     public List<MypageResponse> getAllPost(){
         return  postRepository.findAllByOrderByCreatedAtDesc().stream().map(post -> new MypageResponse(
+                post.id(),
                 post.image(),
                 post.title(),
                 post.singleText(),
@@ -46,6 +47,7 @@ public class PostService {
 
     public List<MypageResponse> getMyPost(Long id){
         return  postRepository.findAllByUserId(id).stream().map(post -> new MypageResponse(
+                        post.id(),
                         post.image(),
                         post.title(),
                         post.singleText(),
