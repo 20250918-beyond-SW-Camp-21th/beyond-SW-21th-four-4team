@@ -30,6 +30,10 @@ public class Post {
 
     @NotNull
     @Column
+    private String nickname;
+
+    @NotNull
+    @Column
     private String title;
 
     @NotNull
@@ -53,7 +57,7 @@ public class Post {
     @Column
     private String image;
 
-    @Column
+    @Column(name = "creat_at")
     @CreatedDate
     private LocalDate createdAt;
 
@@ -62,8 +66,8 @@ public class Post {
     @Column
     private String singleText;
 
-    public static Post from(Long userId, PostRequest req, String image, String objectKey, String originalName) {
-        return new Post(null, userId, req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image,LocalDate.now(),req.getSingleText());
+    public static Post from(Long userId, String nickname,PostRequest req, String image, String objectKey, String originalName) {
+        return new Post(null, userId, nickname,req.getTitle(), req.getLocation(), req.getText(),objectKey, originalName, image,LocalDate.now(),req.getSingleText());
     }
 
 }
