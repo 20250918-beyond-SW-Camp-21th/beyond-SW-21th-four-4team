@@ -35,7 +35,7 @@ public class PostController {
         if(user == null) throw new BusinessException(ErrorCode.AUTH_UNAUTHORIZED);
         MultipartFile file = request.getFile();
         FileInfo fileName = fileService.uploadFile(file);
-        postService.create(user.getId(), request, fileName.objectKey(),fileName.originalName());
+        postService.create(user.getId(),user.getUsername(), request, fileName.objectKey(),fileName.originalName());
 
         return ApiResponse.success();
     }
