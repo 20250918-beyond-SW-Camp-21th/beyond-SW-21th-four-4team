@@ -46,7 +46,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ApiResponse<List<MypageResponse>>getAllPost(){
+    public ApiResponse<List<MypageResponse>>getAllPostOrderByDECS(){
         return ApiResponse.success(postService.getAllPost());
     }
 
